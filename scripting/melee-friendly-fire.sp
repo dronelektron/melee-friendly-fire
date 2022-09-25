@@ -8,7 +8,7 @@ public Plugin myinfo = {
     name = "Melee friendly fire",
     author = "Dron-elektron",
     description = "Allows you to inflict damage to the allies",
-    version = "0.1.0",
+    version = "1.0.0",
     url = "https://github.com/dronelektron/melee-friendly-fire"
 };
 
@@ -16,6 +16,8 @@ static ConVar g_pluginEnabled = null;
 
 public void OnPluginStart() {
     g_pluginEnabled = CreateConVar("sm_melee_friendly_fire", "1", "Enable (1) or disable (0) melee friendly fire");
+
+    AutoExecConfig(true, "melee-friendly-fire");
 }
 
 public void OnClientPutInServer(int client) {
