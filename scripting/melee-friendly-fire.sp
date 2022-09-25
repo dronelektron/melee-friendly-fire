@@ -16,6 +16,8 @@ static ConVar g_pluginEnabled = null;
 
 public void OnPluginStart() {
     g_pluginEnabled = CreateConVar("sm_melee_friendly_fire", "1", "Enable (1) or disable (0) melee friendly fire");
+
+    AutoExecConfig(true, "melee-friendly-fire");
 }
 
 public void OnClientPutInServer(int client) {
