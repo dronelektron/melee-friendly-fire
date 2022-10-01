@@ -8,7 +8,7 @@ public Plugin myinfo = {
     name = "Melee friendly fire",
     author = "Dron-elektron",
     description = "Allows you to inflict damage to the allies",
-    version = "1.0.1",
+    version = "1.0.2",
     url = "https://github.com/dronelektron/melee-friendly-fire"
 };
 
@@ -29,7 +29,7 @@ public void Hook_TraceAttackPost(int victim, int attacker, int inflictor, float 
 
     takeDamage &= IsPluginEnalbed();
     takeDamage &= IsMeleeAttack(damageType);
-    takeDamage &= HasSameTeam(attacker, victim);
+    takeDamage &= HaveSameTeam(victim, attacker);
 
     if (takeDamage) {
         int weapon = GetPlayerWeaponSlot(attacker, WEAPON_SLOT_MELEE);
@@ -46,9 +46,17 @@ bool IsPluginEnalbed() {
     return g_pluginEnabled.IntValue == 1;
 }
 
-bool HasSameTeam(int client, int target) {
-    int clientTeam = GetClientTeam(client);
-    int targetTeam = GetClientTeam(target);
+bool HaveSameTeam(int victim, int attacker) {
+    if (!IsClient(victim) || !IsClient(attacker)) {
+        return false;
+    }
 
-    return clientTeam == targetTeam;
+    int victimTeam = GetClientTeam(victim);
+    int attackerTeam = GetClientTeam(attacker);
+
+    return victimTeam == attackerTeam;
+}
+
+bool IsClient(int client) {
+    return 1 <= client && client <= MaxClients;
 }
